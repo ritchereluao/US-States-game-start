@@ -12,9 +12,8 @@ data = pandas.read_csv("50_states.csv")
 
 states_in_list = data["state"].tolist()
 correct_answer = 0
-game_is_on = True
 
-while game_is_on:
+while correct_answer < 50:
 
     answer_state = screen.textinput(title=f"{correct_answer}/50 States Correct",
                                     prompt="What's another state name?").title()
@@ -37,6 +36,3 @@ while game_is_on:
 
         correct_answer += 1
         states_in_list.remove(answer_state)
-
-        if correct_answer == 50:
-            game_is_on = False
