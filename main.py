@@ -10,16 +10,21 @@ screen.setup(width=725, height=491)
 
 data = pandas.read_csv("50_states.csv")
 
-data_in_list = data["state"].tolist()
+states_in_list = data["state"].tolist()
 correct_answer = 0
 game_is_on = True
 
 while game_is_on:
 
-    answer_state = screen.textinput(title=f"{correct_answer}/50 States Correct", prompt="What's another state name?")
-    answer_state = answer_state.title()
+    answer_state = screen.textinput(title=f"{correct_answer}/50 States Correct",
+                                    prompt="What's another state name?").title()
 
-    if answer_state in data_in_list:
+    if answer_state == "Exit":
+        states_to_learn = pandas.DataFrame(states_in_list)
+        states_to_learn.to_csv("states_to_learn.csv")
+        break
+
+    if answer_state in states_in_list:
 
         x = data[data["state"] == answer_state].x.item()
         y = data[data["state"] == answer_state].y.item()
@@ -31,9 +36,7 @@ while game_is_on:
         writer.write(answer_state, align="center", font=("Arial", 8, "bold"))
 
         correct_answer += 1
-        data_in_list.remove(answer_state)
+        states_in_list.remove(answer_state)
 
         if correct_answer == 50:
             game_is_on = False
-
-screen.exitonclick()
